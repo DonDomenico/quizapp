@@ -8,3 +8,16 @@ body {
     align-items: center;
     height: 100vh;
 }
+
+.question-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid #ddd3d3;
+    padding-top: 10px;
+}
+
+.quiz-card {
+    width: 30rem;
+}
