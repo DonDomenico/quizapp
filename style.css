@@ -1,0 +1,10 @@
+body {
+    background-color:  rgb(115 166 255) !important;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
