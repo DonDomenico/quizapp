@@ -66,9 +66,11 @@ function checkAnswer(i) {
     let answerField = document.getElementById(`answer${i}`);
 
     if(answerIndex == correctAnswer) {
-        answerField.style.backgroundColor = "green";
+        answerField.classList.add('bg-success');
+        answerField.classList.add('text-white');
     } else {
-        answerField.style.backgroundColor = "red";
+        answerField.classList.add('bg-danger');
+        answerField.classList.add('text-white');
     }
 }
 
