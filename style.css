@@ -26,3 +26,13 @@ body {
     background-color: rgb(107, 238, 238);
     cursor: pointer;
 }
+
+.endscreen-image {
+    width: 90%;
+}
+
+.endscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

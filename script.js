@@ -26,7 +26,8 @@ let questions = [
     }
 ]
 
-let currentQuestion = 1;
+let currentQuestion = 0;
+let score = 0;
 
 function init() {
     renderQuestion();
@@ -43,6 +44,7 @@ function renderQuestion() {
         ${questions[currentQuestion].question}
     `;
 }
+
 
 function renderAnswers() {
     let answerContainer = document.getElementById('answer-container');
@@ -69,17 +71,38 @@ function checkAnswer(i) {
 
     if(answerIndex == correctAnswer) {
         answerField.classList.add('bg-success', 'text-white');
+        score++;
     } else {
         answerField.classList.add('bg-danger', 'text-white');
         correctAnswerField.classList.add('bg-success', 'text-white');
     }
-    document.getElementById('next-question').removeAttribute('disabled');
+    document.getElementById('next-question').disabled = false;
 }
 
 
 function nextQuestion() {
     currentQuestion++;
-    init();
+    document.getElementById('next-question').disabled = true;
+    if(currentQuestion == questions.length) {
+        renderEndscreen();
+    } else {
+        init();
+        if(currentQuestion == questions.length - 1) {
+            document.getElementById('next-question').innerHTML = `Quiz beenden`;
+        }
+    }
+}
+
+
+function renderEndscreen() {
+    let cardBody = document.getElementById('card-body');
+    cardBody.innerHTML = /*html*/ `
+        <div class="endscreen">
+            <h2>Quiz beendet</h2>
+            <img class="endscreen-image" src="img/trophy-1674911_640.png" alt="">
+            <div><h3>Du hast ${score} von ${questions.length} richtig beantwortet!</h3></div>
+        </div>
+    `;
 }
 
 
