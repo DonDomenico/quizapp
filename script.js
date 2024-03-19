@@ -38,7 +38,7 @@ function init() {
 
 function renderQuestion() {
     let questionContainer = document.getElementById('question');
-    
+    questionContainer.innerHTML = "";
     questionContainer.innerHTML += /*html*/ `
         ${questions[currentQuestion].question}
     `;
@@ -46,6 +46,7 @@ function renderQuestion() {
 
 function renderAnswers() {
     let answerContainer = document.getElementById('answer-container');
+    answerContainer.innerHTML = "";
 
     for (let i = 0; i < questions[currentQuestion].answers.length; i++) {
         answerContainer.innerHTML += /*html*/ `
@@ -72,12 +73,19 @@ function checkAnswer(i) {
         answerField.classList.add('bg-danger', 'text-white');
         correctAnswerField.classList.add('bg-success', 'text-white');
     }
+    document.getElementById('next-question').removeAttribute('disabled');
+}
+
+
+function nextQuestion() {
+    currentQuestion++;
+    init();
 }
 
 
 function renderQuestionAmount() {
     let container = document.getElementById('question-amount');
-
+    container.innerHTML = "";
     container.innerHTML += /*html*/ `
         ${questions.length}
     `;
@@ -86,7 +94,7 @@ function renderQuestionAmount() {
 
 function renderCurrentQuestionId() {
     let currentQuestionId = document.getElementById('current-question');
-
+    currentQuestionId.innerHTML = "";
     currentQuestionId.innerHTML += /*html*/ `
         ${currentQuestion + 1}.
     `;
