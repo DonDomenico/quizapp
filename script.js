@@ -26,7 +26,7 @@ let questions = [
     }
 ]
 
-let currentQuestion = 0;
+let currentQuestion = 1;
 
 function init() {
     renderQuestion();
@@ -64,13 +64,13 @@ function checkAnswer(i) {
     let answerIndex = questions[currentQuestion].answers.indexOf(clickedAnswer);
     let correctAnswer = questions[currentQuestion].correct_answer;
     let answerField = document.getElementById(`answer${i}`);
+    let correctAnswerField = document.getElementById(`answer${correctAnswer}`);
 
     if(answerIndex == correctAnswer) {
-        answerField.classList.add('bg-success');
-        answerField.classList.add('text-white');
+        answerField.classList.add('bg-success', 'text-white');
     } else {
-        answerField.classList.add('bg-danger');
-        answerField.classList.add('text-white');
+        answerField.classList.add('bg-danger', 'text-white');
+        correctAnswerField.classList.add('bg-success', 'text-white');
     }
 }
 
