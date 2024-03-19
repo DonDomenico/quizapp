@@ -34,6 +34,7 @@ function init() {
     renderAnswers();
     renderCurrentQuestionId();
     renderQuestionAmount();
+    renderProgressBar();
 }
 
 
@@ -59,6 +60,18 @@ function renderAnswers() {
             </div>
         `;
     }
+}
+
+
+function renderProgressBar() {
+    let progressBar = document.getElementById('progress-bar');
+    let width = (currentQuestion + 1) / questions.length * 100;
+
+    progressBar.innerHTML = /*html*/ `
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: ${width}%">${width}%</div>
+        </div>
+    `;
 }
 
 
@@ -96,11 +109,13 @@ function nextQuestion() {
 
 function renderEndscreen() {
     let cardBody = document.getElementById('card-body');
+    document.getElementById('header-image').style.display = 'none';
     cardBody.innerHTML = /*html*/ `
         <div class="endscreen">
             <h2>Quiz beendet</h2>
             <img class="endscreen-image" src="img/trophy-1674911_640.png" alt="">
-            <div><h3>Du hast ${score} von ${questions.length} richtig beantwortet!</h3></div>
+            <div>Du hast <b>${score}</b> von <b>${questions.length}</b> richtig beantwortet!</div>
+            <button class="btn btn-primary" onclick="location.reload()">Nochmal spielen</button>
         </div>
     `;
 }

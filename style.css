@@ -28,11 +28,12 @@ body {
 }
 
 .endscreen-image {
-    width: 90%;
+    width: 100%;
 }
 
 .endscreen {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
 }
