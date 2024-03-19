@@ -28,13 +28,35 @@ let questions = [
 
 let currentQuestion = 0;
 let score = 0;
+let SUCCESS_SOUND = new Audio('audio/success.mp3');
+let FALSE_SOUND = new Audio('audio/wrong.mp3');
+
 
 function init() {
+    renderCard();
     renderQuestion();
     renderAnswers();
     renderCurrentQuestionId();
     renderQuestionAmount();
     renderProgressBar();
+}
+
+
+function renderCard() {
+    let cardBody = document.getElementById('card-body');
+
+    cardBody.innerHTML = /*html*/ `
+        <div id="progress-bar"></div>
+        <h5 class="card-title">Frage</h5>
+        <p class="card-text" id="question"></p>
+        <div class="answer-container" id="answer-container"></div>
+        <div class="question-footer">
+            <span>
+                <b id="current-question"></b> von <b id="question-amount"></b> Fragen
+            </span>
+            <button class="btn btn-primary" id="next-question" onclick="nextQuestion()" disabled>Nächste Frage</button>
+        </div>
+    `;
 }
 
 
@@ -65,10 +87,10 @@ function renderAnswers() {
 
 function renderProgressBar() {
     let progressBar = document.getElementById('progress-bar');
-    let width = (currentQuestion + 1) / questions.length * 100;
+    let width = Math.round(currentQuestion / questions.length * 100);
 
     progressBar.innerHTML = /*html*/ `
-        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="${width}" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-bar" style="width: ${width}%">${width}%</div>
         </div>
     `;
@@ -83,13 +105,27 @@ function checkAnswer(i) {
     let correctAnswerField = document.getElementById(`answer${correctAnswer}`);
 
     if(answerIndex == correctAnswer) {
-        answerField.classList.add('bg-success', 'text-white');
-        score++;
+        answerCorrect(answerField);
     } else {
-        answerField.classList.add('bg-danger', 'text-white');
-        correctAnswerField.classList.add('bg-success', 'text-white');
+        answerWrong(answerField, correctAnswerField);
     }
     document.getElementById('next-question').disabled = false;
+    document.querySelectorAll('.answer-container')[0].classList.add('disable-answers');
+}
+
+
+function answerCorrect(answerField) {
+    answerField.classList.add('bg-success', 'text-white');
+    SUCCESS_SOUND.volume = 0.5;
+    SUCCESS_SOUND.play();
+    score++;
+}
+
+
+function answerWrong(answerField, correctAnswerField) {
+    answerField.classList.add('bg-danger', 'text-white');
+    FALSE_SOUND.play();
+    correctAnswerField.classList.add('bg-success', 'text-white');
 }
 
 
@@ -103,6 +139,7 @@ function nextQuestion() {
         if(currentQuestion == questions.length - 1) {
             document.getElementById('next-question').innerHTML = `Quiz beenden`;
         }
+        document.querySelectorAll('.answer-container')[0].classList.remove('disable-answers');
     }
 }
 
@@ -114,10 +151,19 @@ function renderEndscreen() {
         <div class="endscreen">
             <h2>Quiz beendet</h2>
             <img class="endscreen-image" src="img/trophy-1674911_640.png" alt="">
-            <div>Du hast <b>${score}</b> von <b>${questions.length}</b> richtig beantwortet!</div>
-            <button class="btn btn-primary" onclick="location.reload()">Nochmal spielen</button>
+            <div>Du hast <b>${score}</b> von <b>${questions.length}</b> Fragen richtig beantwortet!</div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Nochmal spielen</button>
         </div>
     `;
+}
+
+
+function restartQuiz() {
+    document.getElementById('header-image').style.display = 'block';
+    currentQuestion = 0;
+    score = 0;
+
+    init();
 }
 
 

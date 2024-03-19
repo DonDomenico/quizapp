@@ -37,3 +37,7 @@ body {
     align-items: center;
     gap: 20px;
 }
+
+.disable-answers {
+    pointer-events: none;
+}
